@@ -15,7 +15,7 @@ ds <- subset(ds, subset = Identifier %in% c("2.4", "2.5", "3.2", "3.3", "7.1", "
 # to keep the influence of individual samples onto the embedding and clustering in check
 
 
-# Seurat analysis with bacth correction using fastMNN
+# Seurat analysis with batch correction using fastMNN
 ds <- Seurat::NormalizeData(
   object               = ds,
   assay                = "RNA",
