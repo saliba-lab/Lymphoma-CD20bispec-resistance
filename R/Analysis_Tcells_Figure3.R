@@ -8,7 +8,7 @@
 # -> Samples 1.2, 1.3, 2.4, 2.5, 3.2, 3.3, 7.1, 7.2
 ds <- readRDS("path/to/Seurat/object.rds")
 
-# exclude samples contributing less than 50 cells (Samples 1.2 & 1.3)
+# exclude samples contributing less than 50 T cells (Samples 1.2 & 1.3)
 ds <- subset(ds, subset = Identifier %in% c("2.4", "2.5", "3.2", "3.3", "7.1", "7.2"))
 
 # Randomly downsample remaining samples to a maximum of 1500 cells
