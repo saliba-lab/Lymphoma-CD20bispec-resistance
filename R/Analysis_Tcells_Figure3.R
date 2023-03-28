@@ -1,5 +1,5 @@
 # Script for analysis of T cells of samples during CD20 bispec therapy
-# excluding samples with less than 50 cells
+# excluding samples with less than 50 T cells
 # related to Figure 3 & Supplementary Figure 4
 #
 #
