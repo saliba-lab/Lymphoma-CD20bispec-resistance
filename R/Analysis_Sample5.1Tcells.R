@@ -30,3 +30,5 @@ T.Annotation <- c(
   "13" = "Treg",
   "14" = "CD8 eff"
 )
+ds@meta.data$Subpopulation <- factor(T.Annotation[ds@meta.data$seurat_clusters],
+                                unique(T.Annotation)[c(2,3,5,1,4,6)])
