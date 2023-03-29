@@ -11,9 +11,20 @@ ds <- readRDS("path/to/Seurat/object.rds")
 # exclude samples contributing less than 50 T cells (Samples 1.2 & 1.3)
 ds <- subset(ds, subset = Identifier %in% c("2.4", "2.5", "3.2", "3.3", "7.1", "7.2"))
 
-# Randomly downsample remaining samples to a maximum of 1500 cells
+# Randomly downsample remaining samples to a maximum of 1500 cells if they have more than 1500 cells
 # to keep the influence of individual samples onto the embedding and clustering in check
-
+cells <- c()
+for (i in unique(ds@meta.data$Identifier)) {
+  if (nrow(ds@meta.data[ds@meta.data$Identifier == i, ]) > 1500) {
+    cellsi <- sample(colnames(subset(ds, subset = Identifier == i)), 1500)
+    cells <- c(cells, cellsi) 
+  }
+  else {
+    cellsi <- colnames(subset(ds, subset = Identifier == i))
+    cells <- c(cells, cellsi)
+  }
+}
+ds <- subset(ds, cells = cells)
 
 # Seurat analysis with batch correction using fastMNN
 ds <- Seurat::NormalizeData(
@@ -108,6 +119,6 @@ genesets <- list(Exhaustion = c("LAG3", "HAVCR2", "PDCD1", "PTMS", "FAM3C", "IFN
                         "EGR2", "BHLHE40", "TGIF1", "KMT2A"))
 
 ds_CD8 <- Seurat::AddModuleScore(
-  object = subset(ds, subset = Annotation2 %in% c("CD8_eff", "CD8_NKT", "CD8_naive")),
+  object = subset(ds, subset = Annotation %in% c("CD8_eff", "CD8_NKT", "CD8_naive")),
   features = genesets, name = names(genesets), nbin = 24, seed = 1999
 )
